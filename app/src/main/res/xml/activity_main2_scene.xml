@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start" />
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/blure"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </ConstraintSet>
+    <Transition
+        android:id="@+id/to_lottie_trans"
+        app:constraintSetEnd="@+id/end"
+        app:constraintSetStart="@+id/start">
+        <OnClick
+            app:targetId="@+id/to_lottie" />
+    </Transition>
+    <ConstraintSet android:id="@+id/animend">
+        <Constraint
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="484dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+    <Transition
+        android:id="@+id/anim_trans"
+        app:constraintSetEnd="@+id/animend"
+        app:constraintSetStart="@+id/start">
+        <OnClick
+            app:targetId="@+id/motion_button" />
+    </Transition>
+    <Transition
+        android:id="@+id/to_lottie_ttrans2"
+        app:constraintSetStart="@+id/animend"
+        app:constraintSetEnd="@+id/end" >
+        <OnClick app:targetId="@+id/to_lottie" />
+    </Transition>
+</MotionScene>
