@@ -2,31 +2,32 @@ package com.example.animationapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
 
-class MainActivity2 : AppCompatActivity() {
+private const val TRANSITION_STATE_KEY = "transition_key"
 
-    private lateinit var m_lay: MotionLayout
-    private lateinit var b: Button
-    private lateinit var b2: Button
+class MotionLayoutActivity : AppCompatActivity() {
+
+    private lateinit var motionLayout: MotionLayout
+    private lateinit var animateTextBtn: Button
+    private lateinit var navigateBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
 
-        m_lay = findViewById(R.id.m_lay)
-        b = findViewById(R.id.to_lottie)
-        b2 = findViewById(R.id.motion_button)
+        motionLayout = findViewById(R.id.m_lay)
+        navigateBtn = findViewById(R.id.to_lottie)
+        animateTextBtn = findViewById(R.id.motion_button)
     }
 
     override fun onStart() {
         super.onStart()
 
-        m_lay.addTransitionListener(object : TransitionAdapter() {
+        motionLayout.addTransitionListener(object : TransitionAdapter() {
 
             override fun onTransitionStarted(
                 motionLayout: MotionLayout?,
@@ -40,9 +41,21 @@ class MainActivity2 : AppCompatActivity() {
                 super.onTransitionCompleted(motionLayout, currentId)
 
                 if (currentId == R.id.end) {
-                    startActivity(Intent(this@MainActivity2, MainActivity3::class.java))
+                    startActivity(Intent(this@MotionLayoutActivity, LottieAnimationActivity::class.java))
                 }
             }
         })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putBundle(TRANSITION_STATE_KEY, motionLayout.transitionState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        motionLayout.transitionState = savedInstanceState.getBundle(TRANSITION_STATE_KEY)
     }
 }
