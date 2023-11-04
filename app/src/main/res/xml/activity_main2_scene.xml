@@ -3,20 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ConstraintSet android:id="@+id/start" />
-    <ConstraintSet android:id="@+id/end">
-        <Constraint
-            android:id="@+id/blure"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </ConstraintSet>
-    <Transition
-        android:id="@+id/to_lottie_trans"
-        app:constraintSetEnd="@+id/end"
-        app:constraintSetStart="@+id/start">
-        <OnClick
-            app:targetId="@+id/to_lottie" />
-    </Transition>
     <ConstraintSet android:id="@+id/animend">
         <Constraint
             android:id="@+id/textView"
@@ -44,11 +30,5 @@
                 app:framePosition="40"
                 android:translationX="30dp" />
         </KeyFrameSet>
-    </Transition>
-    <Transition
-        android:id="@+id/to_lottie_ttrans2"
-        app:constraintSetStart="@+id/animend"
-        app:constraintSetEnd="@+id/end" >
-        <OnClick app:targetId="@+id/to_lottie" />
     </Transition>
 </MotionScene>

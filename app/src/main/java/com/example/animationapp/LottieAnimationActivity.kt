@@ -2,7 +2,6 @@ package com.example.animationapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import com.airbnb.lottie.LottieAnimationView
 
@@ -17,7 +16,7 @@ class LottieAnimationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main3)
+        setContentView(R.layout.lottie_activity)
 
         lottie = findViewById(R.id.lottie_view)
         startStopBtn = findViewById(R.id.stop_btn)

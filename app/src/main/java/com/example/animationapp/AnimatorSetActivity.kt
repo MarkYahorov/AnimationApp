@@ -2,7 +2,6 @@ package com.example.animationapp
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -18,8 +17,7 @@ class AnimatorSetActivity : AppCompatActivity() {
 
     private lateinit var animatedView: TextView
     private lateinit var bigScaleAnimationBtn: Button
-    private lateinit var view4: Button
-    private val animatorSet = AnimatorSet().apply {
+    private var animatorSet = AnimatorSet().apply {
         addListener(
             onEnd = {
                 bigScaleAnimationBtn.text =
@@ -36,11 +34,10 @@ class AnimatorSetActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.animator_set_activity)
 
         animatedView = findViewById(R.id.some_id)
         bigScaleAnimationBtn = findViewById(R.id.property_anim)
-        view4 = findViewById(R.id.button3)
     }
 
     override fun onStart() {
@@ -51,15 +48,11 @@ class AnimatorSetActivity : AppCompatActivity() {
             val scaleYValue = getObjectAnimatorScaleValue(animatedView.scaleY)
             val animationX = ObjectAnimator.ofFloat(animatedView, SCALE_X_KEY, scaleXValue)
             val animationY = ObjectAnimator.ofFloat(animatedView, SCALE_Y_KEY, scaleYValue)
-            animatorSet.cancel()
+            updateAnimatorSet()
             animatorSet.duration = 500
             animatorSet.play(animationX)
                 .with(animationY)
             animatorSet.start()
-        }
-
-        view4.setOnClickListener {
-            startActivity(Intent(this, MotionLayoutActivity::class.java))
         }
     }
 
@@ -97,5 +90,23 @@ class AnimatorSetActivity : AppCompatActivity() {
         super.onResume()
 
         animatorSet.resume()
+    }
+
+    private fun updateAnimatorSet() {
+        animatorSet.removeAllListeners()
+        animatorSet = AnimatorSet().apply {
+            addListener(
+                onEnd = {
+                    bigScaleAnimationBtn.text =
+                        if (getObjectAnimatorScaleValue(animatedView.scaleX) == INITIAL_ANIMATED_VALUE) {
+                            "Click to initial value animation"
+                        } else {
+                            "Click to Big Scale animation"
+                        }
+                    updateEnabledBtnState(true)
+                },
+                onStart = { updateEnabledBtnState(false) }
+            )
+        }
     }
 }

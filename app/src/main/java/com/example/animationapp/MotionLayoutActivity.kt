@@ -13,14 +13,12 @@ class MotionLayoutActivity : AppCompatActivity() {
 
     private lateinit var motionLayout: MotionLayout
     private lateinit var animateTextBtn: Button
-    private lateinit var navigateBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main2)
+        setContentView(R.layout.motion_activity)
 
         motionLayout = findViewById(R.id.m_lay)
-        navigateBtn = findViewById(R.id.to_lottie)
         animateTextBtn = findViewById(R.id.motion_button)
     }
 
@@ -35,14 +33,18 @@ class MotionLayoutActivity : AppCompatActivity() {
                 endId: Int
             ) {
                 super.onTransitionStarted(motionLayout, startId, endId)
+                animateTextBtn.isEnabled = false
             }
 
             override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
                 super.onTransitionCompleted(motionLayout, currentId)
 
-                if (currentId == R.id.end) {
-                    startActivity(Intent(this@MotionLayoutActivity, LottieAnimationActivity::class.java))
+                if (currentId == R.id.animend) {
+                   animateTextBtn.text = "Animate text to top"
+                } else if (currentId == R.id.start){
+                    animateTextBtn.text = "Animate text to bottom"
                 }
+                animateTextBtn.isEnabled = true
             }
         })
     }
